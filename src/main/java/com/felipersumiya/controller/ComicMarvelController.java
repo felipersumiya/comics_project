@@ -31,6 +31,8 @@ public class ComicMarvelController {
 		System.out.println(comics.getData().getOffset());
 		System.out.println("id:");
 		System.out.println(comics.getData().getResults().get(0).getId());
+		System.out.println("Quantidade de livros");
+		System.out.println(comics.getData().getResults().size());
         return comics != null ? ResponseEntity.ok().body(comics) : ResponseEntity.notFound().build(); 
 	}			
 }

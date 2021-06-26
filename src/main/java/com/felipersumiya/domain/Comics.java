@@ -19,8 +19,7 @@ public class Comics implements Serializable {
 	//@GeneratedValue (strategy  = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
-	private List <Price> prices;
-	private List<Creator> creators;
+	
 	private String isbn;
 	private String description;
 	
@@ -28,19 +27,16 @@ public class Comics implements Serializable {
 		
 	}
 
-	
-
-	public Comics(Long id, String title, List<Price> prices, List<Creator> creators, String isbn, String description) {
+	public Comics(Long id, String title, String isbn, String description) {
 		super();
 		this.id = id;
 		this.title = title;
-		this.prices = prices;
-		this.creators = creators;
+
+
 		this.isbn = isbn;
 		this.description = description;
 	}
 
-	
 
 
 	public Long getId() {
@@ -48,60 +44,25 @@ public class Comics implements Serializable {
 	}
 
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 
 	public String getTitle() {
 		return title;
 	}
 
-
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
-
-	public List<Price> getPrices() {
-		return prices;
-	}
-
-
-
-	public void setPrices(List<Price> prices) {
-		this.prices = prices;
-	}
-
-
-
-	public List<Creator> getCreators() {
-		return creators;
-	}
-
-
-
-	public void setCreators(List<Creator> creators) {
-		this.creators = creators;
-	}
-
-
 
 	public String getIsbn() {
 		return isbn;
 	}
 
-
-
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-
-
 
 	public String getDescription() {
 		return description;
@@ -123,8 +84,6 @@ public class Comics implements Serializable {
 		return result;
 	}
 
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -142,7 +101,4 @@ public class Comics implements Serializable {
 		return true;
 	}
 
-
-	
-	
 }

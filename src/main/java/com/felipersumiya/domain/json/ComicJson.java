@@ -2,17 +2,13 @@ package com.felipersumiya.domain.json;
 
 import java.util.List;
 
-import com.felipersumiya.domain.Creator;
-import com.felipersumiya.domain.Price;
 //objeto principa do Json
 public class ComicJson {
 	
 	private String code;
 	private String id;
 	private String title;
-	private List <Price> prices;
-	private List<Creator> creators;
-	private String isbn;
+	private String isbn;//necessário
 	private String description;
 	private String etag;
 	private Integer offset;
@@ -21,11 +17,9 @@ public class ComicJson {
 	
 
 	public ComicJson() {
-		
-		
+				
 	}
 
-	
 	public Integer getOffset() {
 		return offset;
 	}
@@ -74,22 +68,6 @@ public class ComicJson {
 		this.title = title;
 	}
 
-	public List<Price> getPrices() {
-		return prices;
-	}
-
-	public void setPrices(List<Price> prices) {
-		this.prices = prices;
-	}
-
-	public List<Creator> getCreators() {
-		return creators;
-	}
-
-	public void setCreators(List<Creator> creators) {
-		this.creators = creators;
-	}
-
 	public String getIsbn() {
 		return isbn;
 	}
@@ -113,7 +91,5 @@ public class ComicJson {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
-	
 	
 }

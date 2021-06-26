@@ -1,11 +1,15 @@
 package com.felipersumiya.domain.json;
 
+import java.util.List;
+
 public class Results {
 	
 	private Integer id;
 	private Integer digitalId;
 	private String title;
-	
+	private String description;
+	private List<Prices> prices;
+	private Creators creators;
 	public Results() {
 		
 	}
@@ -33,5 +37,29 @@ public class Results {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<Prices> getPrices() {
+		return prices;
+	}
+
+	public void setPrices(List<Prices> prices) {
+		this.prices = prices;
+	}
+
+	public Creators getCreators() {
+		return creators;
+	}
+
+	public void setCreators(Creators creators) {
+		this.creators = creators;
+	}
+		
 }
