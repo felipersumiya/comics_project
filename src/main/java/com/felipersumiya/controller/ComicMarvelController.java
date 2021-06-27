@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.felipersumiya.cloud.ComicMarvelService;
 import com.felipersumiya.domain.json.ComicJson;
+import com.felipersumiya.services.ComicsService;
 
 
 @RestController
@@ -19,6 +20,9 @@ public class ComicMarvelController {
 		
 	@Autowired
 	private ComicMarvelService service;
+	
+	@Autowired
+	private ComicsService comicService;
 
 	@GetMapping
 	public ResponseEntity<ComicJson> findAll() throws JsonMappingException, JsonProcessingException {
@@ -33,6 +37,9 @@ public class ComicMarvelController {
 		System.out.println(comics.getData().getResults().get(0).getId());
 		System.out.println("Quantidade de livros");
 		System.out.println(comics.getData().getResults().size());
+		
+		comicService.inserirComics(comics);		
+	
         return comics != null ? ResponseEntity.ok().body(comics) : ResponseEntity.notFound().build(); 
 	}			
 }

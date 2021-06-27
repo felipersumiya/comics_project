@@ -7,6 +7,7 @@ public class Results {
 	private Integer id;
 	private Integer digitalId;
 	private String title;
+	private String isbn;
 	private String description;
 	private List<Prices> prices;
 	private Creators creators;
@@ -61,5 +62,13 @@ public class Results {
 	public void setCreators(Creators creators) {
 		this.creators = creators;
 	}
-		
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	
 }

@@ -3,11 +3,7 @@ package com.felipersumiya.domain;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.felipersumiya.domain.json.Items;
 
 //@Entity
 //@Table (name ="tb_table")
@@ -18,42 +14,40 @@ public class Comics implements Serializable {
 	//@Id
 	//@GeneratedValue (strategy  = GenerationType.IDENTITY)
 	private Long id;
-	private String title;
-	
+	private String titulo;
 	private String isbn;
-	private String description;
+	private String descricao;
+	private Double preco;
+	private List<Items> autores;
 	
 	public Comics() {
 		
 	}
 
-	public Comics(Long id, String title, String isbn, String description) {
+	public Comics(Long id, String titulo, String isbn, String descricao, Double preco, List<Items> autores) {
 		super();
 		this.id = id;
-		this.title = title;
-
-
+		this.titulo = titulo;
 		this.isbn = isbn;
-		this.description = description;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.autores = autores;
 	}
-
-
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getTitulo() {
+		return titulo;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getIsbn() {
@@ -64,17 +58,29 @@ public class Comics implements Serializable {
 		this.isbn = isbn;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDescricao() {
+		return descricao;
 	}
 
-
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
+	public Double getPreco() {
+		return preco;
+	}
 
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	public List<Items> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(List<Items> autores) {
+		this.autores = autores;
+	}
 
 	@Override
 	public int hashCode() {
@@ -100,5 +106,6 @@ public class Comics implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	
 }
