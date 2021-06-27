@@ -10,7 +10,6 @@ public class Creators {
 		
 	}
 	
-
 	public List<Items> getItems() {
 		return items;
 	}
@@ -18,6 +17,5 @@ public class Creators {
 	public void setItems(List<Items> items) {
 		this.items = items;
 	}
-	
 	
 }

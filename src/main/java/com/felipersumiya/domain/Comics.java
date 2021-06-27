@@ -1,30 +1,49 @@
 package com.felipersumiya.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.felipersumiya.domain.json.Items;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//@Entity
-//@Table (name ="tb_table")
+@Entity
+@Table (name ="tb_comics")
 public class Comics implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	//@Id
-	//@GeneratedValue (strategy  = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue (strategy  = GenerationType.IDENTITY)
 	private Long id;
 	private String titulo;
 	private String isbn;
 	private String descricao;
 	private Double preco;
-	private List<Items> autores;
+	
+
+	/*@ManyToMany
+	@JoinTable ( name="tb_comic_autor",
+	joinColumns= @JoinColumn (name="comic_id"), 
+	inverseJoinColumns = @JoinColumn (name="autor_id"))*/
+	@Transient
+	private List<Autor> autores = new ArrayList<>();
+	
+	@Transient
+	private List<Usuario> usuarios;
 	
 	public Comics() {
 		
 	}
 
-	public Comics(Long id, String titulo, String isbn, String descricao, Double preco, List<Items> autores) {
+	public Comics(Long id, String titulo, String isbn, String descricao, Double preco, List<Autor> autores) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -74,12 +93,20 @@ public class Comics implements Serializable {
 		this.preco = preco;
 	}
 
-	public List<Items> getAutores() {
+	public List<Autor> getAutores() {
 		return autores;
 	}
 
-	public void setAutores(List<Items> autores) {
+	public void setAutores(List<Autor> autores) {
 		this.autores = autores;
+	}
+	
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	@Override
@@ -106,6 +133,8 @@ public class Comics implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 	
 	
 }
