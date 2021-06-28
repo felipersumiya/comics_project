@@ -1,6 +1,5 @@
 package com.felipersumiya.domain.json;
 
-import java.util.List;
 
 //objeto principa do Json
 public class ComicJson {
@@ -8,12 +7,11 @@ public class ComicJson {
 	private String code;
 	private String id;
 	private String title;
-	private String isbn;//necessário
+	private String isbn;
 	private String description;
 	private String etag;
 	private Integer offset;
 	private Data data;
-	
 	
 
 	public ComicJson() {
@@ -35,8 +33,6 @@ public class ComicJson {
 	}
 
 
-	
-	
 	public Data getData() {
 		return data;
 	}

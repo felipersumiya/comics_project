@@ -24,14 +24,12 @@ public class Autor implements Serializable{
 	private Long id;
 	private String nome;
 	
-
 	//@Transient
 	@JsonIgnore
 	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn (name = "comic_id")
 	private Comics comic;
 	
-
 	public Autor() {
 		
 	}
@@ -72,7 +70,6 @@ public class Autor implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
 	
 
 	@Override

@@ -23,6 +23,8 @@ public class ComicsService {
 	
 	@Autowired AutorRepository autorRepository;
 	
+	//private static char last0= ''
+	
 	//inserir os livros (Comics) no banco de dados.
 	public void inserirComics(ComicJson comicJson) {
 		
@@ -65,11 +67,13 @@ public class ComicsService {
 			autores = convertList(itens);//converte a lista de Items(obtida na API da Marvel) para a o tipo <Autor>. Presente em nosso modelo de dados.
 	
 			System.out.println("converteu lista");
-			comics.setDescricao(y.getDescription() != null ? y.getDescription().substring(0, 100) : "indefinido");
+			comics.setDescricao(y.getDescription() != null ? y.getDescription().substring(0, 100) : "Indisponível");
 			comics.setTitulo(y.getTitle());
-			comics.setIsbn(y.getIsbn());
+			comics.setIsbn(y.getIsbn().isEmpty() ? "Indisponível" : y.getIsbn());
 			comics.setPreco(y.getPrices().get(0).getPrice());
 			
+			//setando novo atributo
+			comics.setDiaDesconto(ComicsService.definirDiaDesconto(comics.getIsbn()));
 	
 			//Popula a lista de autores no objeto comics.
 			for(Autor autor : autores) {
@@ -114,13 +118,13 @@ public class ComicsService {
 			if(listI.isEmpty()) {
 				
 				System.out.println("Entrou na lista vazia");
-				a.setNome("indefinido");
+				a.setNome("Indisponível");
 				listA.add(a);
 				
 				for(Items x : listI) {
 					
 					System.out.println("Entrou na lista vazia");
-					a.setNome("indefinido");
+					a.setNome("Indisponível");
 					listA.add(a);
 					
 				}
@@ -146,6 +150,46 @@ public class ComicsService {
 		
 	}
 	
+	public static String definirDiaDesconto(String isbn) {
+		
+		char ultimoDig;
+		String diaDescontoAtivo="Não possui desconto";
+		
+		if(isbn != "Indisponível") {
+			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ENTROU$$$$");
+			ultimoDig = isbn.charAt(isbn.length() - 1);
+			System.out.println("VALOR##############ULTIMO DIG:");
+			System.out.println(ultimoDig);
+		
+			if(ultimoDig == '0' || ultimoDig == '1' ) {
+			
+				diaDescontoAtivo = "segunda-feira";
+			}
+		
+			if(ultimoDig == '2' || ultimoDig == '3' ) {
+			
+				diaDescontoAtivo = "terça-feira";
+			}
+		
+			if(ultimoDig == '4' || ultimoDig == '5' ) {
+			
+				diaDescontoAtivo = "quarta-feira";
+			}
+	
+			if(ultimoDig == '6' || ultimoDig == '7' ) {
+		
+				diaDescontoAtivo = "quinta-feira";
+			}
+	
+			if(ultimoDig == '8' || ultimoDig == '9' ) {
+		
+				diaDescontoAtivo = "sexta-feira";
+			}
+		
+		}
+		
+		return diaDescontoAtivo;			
+	}	
 	
 }
 

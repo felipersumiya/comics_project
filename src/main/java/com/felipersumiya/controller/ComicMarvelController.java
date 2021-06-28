@@ -30,11 +30,6 @@ public class ComicMarvelController {
 	private ComicsService comicService;
 
 	
-
-	/*@GetMapping
-	public ResponseEntity<ComicJson> cadastrarComics() throws JsonMappingException, JsonProcessingException {
-	*/
-	
 	@GetMapping
 	public ResponseEntity<List<Comics>> cadastrarComics() throws JsonMappingException, JsonProcessingException {
 

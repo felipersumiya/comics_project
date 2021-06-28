@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,13 +29,9 @@ public class Comics implements Serializable {
 	private boolean descontoAtivo;
 	
 
-
-	//@Transient
 	@OneToMany (mappedBy = "comic")//,fetch = FetchType.EAGER)
 	private List<Autor> autores = new ArrayList<>();
-	
 
-	
 	@Transient
 	private List<Usuario> usuarios;
 	
@@ -108,6 +103,7 @@ public class Comics implements Serializable {
 	}
 
 	public void setDiaDesconto(String diaDesconto) {
+		
 		this.diaDesconto = diaDesconto;
 	}
 
@@ -118,6 +114,7 @@ public class Comics implements Serializable {
 	public void setDescontoAtivo(boolean descontoAtivo) {
 		this.descontoAtivo = descontoAtivo;
 	}
+	
 
 	@Override
 	public int hashCode() {
