@@ -1,5 +1,8 @@
 package com.felipersumiya.controller;
 
+import java.util.List;
+
+import org.hibernate.loader.custom.CollectionFetchReturn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.felipersumiya.cloud.ComicMarvelService;
+import com.felipersumiya.domain.Autor;
+import com.felipersumiya.domain.Comics;
 import com.felipersumiya.domain.json.ComicJson;
 import com.felipersumiya.services.ComicsService;
 
@@ -41,5 +46,37 @@ public class ComicMarvelController {
 		comicService.inserirComics(comics);		
 	
         return comics != null ? ResponseEntity.ok().body(comics) : ResponseEntity.notFound().build(); 
-	}			
+	}	
+	
+	@GetMapping (value = "/comicsList")
+	public ResponseEntity<List<Comics>> buscarComics(){
+		
+		List<Comics> listComics;
+		
+		listComics = comicService.buscarLivrosBanco();
+		
+
+		for(Comics x : listComics) {
+			
+			System.out.println("*****Retorno que deve estar certo*** ---- Como está a lista de autores vinda do banco");
+			System.out.println("Agora veremos se a lista está correta para ser inserida no banco");
+			System.out.println("Título");
+			System.out.println(x.getTitulo());
+			System.out.println("número de autores");
+			System.out.println(x.getAutores().size());
+			
+			for (Autor nome : x.getAutores()) {
+				System.out.println("Autor:");
+				System.out.println(nome.getNome());
+			}
+			//System.out.println("Autor:");
+			//System.out.println(x.getAutores().get(0).getNome());
+			
+			
+		}
+		
+		return ResponseEntity.ok().body(listComics);
+	}
+	
 }
+

@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,12 +28,12 @@ public class Comics implements Serializable {
 	private Double preco;
 	
 
-	/*@ManyToMany
-	@JoinTable ( name="tb_comic_autor",
-	joinColumns= @JoinColumn (name="comic_id"), 
-	inverseJoinColumns = @JoinColumn (name="autor_id"))*/
-	@Transient
+
+	//@Transient
+	@OneToMany (mappedBy = "comic")//,fetch = FetchType.EAGER)
 	private List<Autor> autores = new ArrayList<>();
+	
+
 	
 	@Transient
 	private List<Usuario> usuarios;
@@ -43,14 +42,14 @@ public class Comics implements Serializable {
 		
 	}
 
-	public Comics(Long id, String titulo, String isbn, String descricao, Double preco, List<Autor> autores) {
+	public Comics(Long id, String titulo, String isbn, String descricao, Double preco) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.isbn = isbn;
 		this.descricao = descricao;
 		this.preco = preco;
-		this.autores = autores;
+
 	}
 
 	public Long getId() {
@@ -97,9 +96,6 @@ public class Comics implements Serializable {
 		return autores;
 	}
 
-	public void setAutores(List<Autor> autores) {
-		this.autores = autores;
-	}
 	
 	public List<Usuario> getUsuarios() {
 		return usuarios;
