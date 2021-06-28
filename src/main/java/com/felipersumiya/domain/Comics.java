@@ -26,6 +26,8 @@ public class Comics implements Serializable {
 	private String isbn;
 	private String descricao;
 	private Double preco;
+	private String diaDesconto;
+	private boolean descontoAtivo;
 	
 
 
@@ -101,8 +103,20 @@ public class Comics implements Serializable {
 		return usuarios;
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public String getDiaDesconto() {
+		return diaDesconto;
+	}
+
+	public void setDiaDesconto(String diaDesconto) {
+		this.diaDesconto = diaDesconto;
+	}
+
+	public boolean isDescontoAtivo() {
+		return descontoAtivo;
+	}
+
+	public void setDescontoAtivo(boolean descontoAtivo) {
+		this.descontoAtivo = descontoAtivo;
 	}
 
 	@Override

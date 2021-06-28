@@ -62,32 +62,25 @@ public class ComicsService {
 			}
 			
 			System.out.println("passou aqui");
-			autores = convertList(itens);
+			autores = convertList(itens);//converte a lista de Items(obtida na API da Marvel) para a o tipo <Autor>. Presente em nosso modelo de dados.
+	
 			System.out.println("converteu lista");
-			//comics.setId( Long.valueOf(y.getId()));
 			comics.setDescricao(y.getDescription() != null ? y.getDescription().substring(0, 100) : "indefinido");
 			comics.setTitulo(y.getTitle());
 			comics.setIsbn(y.getIsbn());
 			comics.setPreco(y.getPrices().get(0).getPrice());
-			//conferir se aqui está sendo populado corretamente a lista de autores para cada comic
 			
-			
-		//popular List<Autores>	
+	
+			//Popula a lista de autores no objeto comics.
 			for(Autor autor : autores) {
-			comics.getAutores().add(autor);
-			autor.setComic(comics);//adicion o comic no autor
+			comics.getAutores().add(autor);//adiciona autor em comics.
+			autor.setComic(comics);//relaciona cada autor a um comic(livro.)Na classe de autores.
 			
 			}
-			//comics.getAutores().addAll(autores);//adiciona a lista de autores para cada Comic
-	
-	
-			
+		
 			listComics.add(comics);// adiciona cada livro na lista de Comics
 			
-		
-			
-			//autores.get(0).setComic(comics);
-			
+			//Salva a lista de autores obtidos através da API da Marvel no banco de dados.
 			autorRepository.saveAll(autores);// adicona a lista de autores no banco de dados.
 			
 		}
@@ -104,12 +97,11 @@ public class ComicsService {
 				System.out.println("Autor:");
 				System.out.println(nome.getNome());
 			}
-			//System.out.println("Autor:");
-			//System.out.println(x.getAutores().get(0).getNome());
-			
+		
 			
 		}
 		
+		//Salva os livros obtidos através da API no nosso banco de dados.
 		comicRepository.saveAll(listComics);
 	}
 	
@@ -140,8 +132,7 @@ public class ComicsService {
 				autor2.setNome(x.getName());
 				listA.add(autor2);
 				
-			}
-			//listA.removeIf(null)
+			}	
 			
 			return listA;
 	}
@@ -154,7 +145,6 @@ public class ComicsService {
 		
 		
 	}
-	
 	
 	
 }

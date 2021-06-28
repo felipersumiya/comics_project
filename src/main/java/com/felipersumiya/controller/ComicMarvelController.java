@@ -22,30 +22,35 @@ import com.felipersumiya.services.ComicsService;
 @RequestMapping (value="/comics_marvel")
 public class ComicMarvelController {
 	
-		
+	//Atributo utilizado para a chamado o serviço externo. Utiliza o Spring Cloud Feign e chama a API da Marvel. 
 	@Autowired
 	private ComicMarvelService service;
-	
+	//Atributo que referencia a classe de serviços dos Comics.
 	@Autowired
 	private ComicsService comicService;
 
-	@GetMapping
-	public ResponseEntity<ComicJson> findAll() throws JsonMappingException, JsonProcessingException {
-
-		ComicJson comics = service.buscaComics();
-		System.out.println(comics.toString());
-		System.out.println("code:");
-		System.out.println(comics.getCode());
-		System.out.println("offset:");
-		System.out.println(comics.getData().getOffset());
-		System.out.println("id:");
-		System.out.println(comics.getData().getResults().get(0).getId());
-		System.out.println("Quantidade de livros");
-		System.out.println(comics.getData().getResults().size());
-		
-		comicService.inserirComics(comics);		
 	
-        return comics != null ? ResponseEntity.ok().body(comics) : ResponseEntity.notFound().build(); 
+
+	/*@GetMapping
+	public ResponseEntity<ComicJson> cadastrarComics() throws JsonMappingException, JsonProcessingException {
+	*/
+	
+	@GetMapping
+	public ResponseEntity<List<Comics>> cadastrarComics() throws JsonMappingException, JsonProcessingException {
+
+		//Traz o Json com os comics da API da marvel e converte para nossa classe ComicJson.
+		//Obtém através do Spring Cloud Feign
+		ComicJson comics = service.buscaComics();
+		List<Comics> listaComics;
+		//Cadastra os comics no banco de dados.
+		comicService.inserirComics(comics);	
+		
+		//Retorna a lista de livros que foi inserida no banco de dados
+		listaComics = comicService.buscarLivrosBanco();
+		
+		return listaComics != null ? ResponseEntity.ok().body(listaComics) : ResponseEntity.notFound().build(); 
+		
+       // return comics != null ? ResponseEntity.ok().body(comics) : ResponseEntity.notFound().build(); 
 	}	
 	
 	@GetMapping (value = "/comicsList")
