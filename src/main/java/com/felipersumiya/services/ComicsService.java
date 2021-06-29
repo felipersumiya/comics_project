@@ -1,6 +1,7 @@
 package com.felipersumiya.services;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,15 @@ public class ComicsService {
 			
 			//setando novo atributo
 			comics.setDiaDesconto(ComicsService.definirDiaDesconto(comics.getIsbn()));
+			
+			//setando desconto ativo
+			comics.setDescontoAtivo(ComicsService.definirDescontoAtivo(comics.getDiaDesconto()));
+			
+			//verificar se o preço do livro será com desconto
+			if (comics.isDescontoAtivo() == true) {
+				//somente desconta o valor caso seja o dia de desconto
+				comics.setPreco(ComicsService.aplicaDesconto(comics.getPreco()));
+			}
 	
 			//Popula a lista de autores no objeto comics.
 			for(Autor autor : autores) {
@@ -190,6 +200,80 @@ public class ComicsService {
 		
 		return diaDescontoAtivo;			
 	}	
+	
+	
+	public static boolean definirDescontoAtivo(String diaDescontoIsbn) {
+		
+		GregorianCalendar gcalendar = new GregorianCalendar();
+		int diaSemanaN;
+		String diaSemana;
+		diaSemanaN = gcalendar.get(gcalendar.DAY_OF_WEEK);	
+		diaSemana = converteDiaSemana(diaSemanaN);
+		
+		
+		if (diaSemana == diaDescontoIsbn) {
+			
+			return true;
+			
+		}
+		
+		
+		
+		return false;
+	}
+	
+	public static String converteDiaSemana(int dia) {
+		
+		if (dia == 1){
+			
+			return "domingo";
+					
+		}
+		
+		if (dia == 2){
+			
+			return "segunda-feira";
+					
+		}
+		
+		if (dia == 3){
+			
+			return "terça-feira";
+					
+		}
+		
+		if (dia == 4){
+			
+			return "quarta-feira";
+					
+		}
+		
+		if (dia == 5){
+			
+			return "quinta-feira";
+					
+		}
+		
+		if (dia == 6){
+			
+			return "sexta-feira";
+					
+		}
+		
+		if (dia == 7){
+			return "domingo";
+					
+		}
+		
+		
+		return "dia inexistente";
+	}
+	
+	public static Double aplicaDesconto(Double preco) {
+		
+		return preco = preco * 0.9;
+		
+	}
 	
 }
 
