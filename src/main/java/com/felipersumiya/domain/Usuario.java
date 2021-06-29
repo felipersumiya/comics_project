@@ -4,15 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
+
 
 @Entity
-@Table (name="tb_user")
+@Table (name="tb_user", uniqueConstraints = {@UniqueConstraint(columnNames = "cpf")})
 public class Usuario implements Serializable {
 
 
@@ -23,7 +26,11 @@ public class Usuario implements Serializable {
 	@GeneratedValue (strategy  = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+		
+	@Column(unique = true, nullable = false)
 	private String cpf;
+
+	@Column(unique = true, nullable = false)
 	private String email;
 	private String dataNascimento;
 	

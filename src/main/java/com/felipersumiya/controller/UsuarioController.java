@@ -16,6 +16,7 @@ import com.felipersumiya.domain.Usuario;
 import com.felipersumiya.services.UsuarioService;
 
 
+
 @RestController
 @RequestMapping (value="/usuarios")
 public class UsuarioController {
@@ -42,14 +43,26 @@ public class UsuarioController {
 	
 	
 	@PostMapping
-	public ResponseEntity<Usuario> insereUsuario( @RequestBody Usuario usuario){
+	public ResponseEntity<Void> insereUsuario( @RequestBody Usuario usuario){
 			
-		usuario = usuarioService.inserir(usuario);
+		usuarioService.inserir(usuario);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(usuario.getId()).toUri();
 		
-		return ResponseEntity.created(uri).body(usuario);
+		return ResponseEntity.created(uri).build();
 	}
+	
+	/*@PostMapping
+	public ResponseEntity<Void> insertDTO( @RequestBody ClienteDto clienteDto){
+		
+		Cliente cliente = clienteService.fromDTO(clienteDto);
+		clienteService.insert(cliente);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clienteDto.getId()).toUri();
+		
+		return ResponseEntity.created(uri).build();
+		
+	}*/
 	
 
 }
