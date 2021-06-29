@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.felipersumiya.dto.ComicsDto;
+
 @Entity
 @Table (name ="tb_comics")
 public class Comics implements Serializable {
@@ -48,6 +50,15 @@ public class Comics implements Serializable {
 		this.isbn = isbn;
 		this.descricao = descricao;
 		this.preco = preco;
+
+	}
+	
+	public Comics (ComicsDto comicsDto) {
+		this.id = comicsDto.getId();
+		this.titulo = comicsDto.getTitulo();
+		this.isbn = comicsDto.getIsbn();
+		this.descricao = comicsDto.getDescricao();
+		this.preco = comicsDto.getPreco();
 
 	}
 

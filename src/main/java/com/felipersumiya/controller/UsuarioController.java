@@ -56,7 +56,30 @@ public class UsuarioController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(usuarioDto.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
-	}
+			
+		}
+	
+	
+	// criar método mostra a lista de livros para um Usuário @GetMappinh
+	
+	
+	
+	
+	
+	
+	//criar método adicionar livros para um usuário @post
+	/**@PostMapping
+	public ResponseEntity<Void> insereComicUser (@RequestBody UsuarioDto usuarioDto, ComicsDto comicDto){
+	
+	
+	Usuario usuario = usuarioService.converteDto(usuarioDto);
+	List<Comics> listaComics = listComicDto.stream().map(x -> new Comics(x)).collect(Collectors.toList());
+	
+	//chame o método aqui
+	
+	return ResponseEntity.ok().build();
 	
 
+	}**/
+	
 }

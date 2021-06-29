@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.felipersumiya.domain.Autor;
 import com.felipersumiya.domain.Comics;
+import com.felipersumiya.domain.Usuario;
 import com.felipersumiya.domain.json.ComicJson;
 import com.felipersumiya.domain.json.Items;
 import com.felipersumiya.domain.json.Results;
+import com.felipersumiya.dto.ComicsDto;
 import com.felipersumiya.repositories.AutorRepository;
 import com.felipersumiya.repositories.ComicsRepository;
 
@@ -22,7 +24,8 @@ public class ComicsService {
 	@Autowired
 	private ComicsRepository comicRepository;
 	
-	@Autowired AutorRepository autorRepository;
+	@Autowired 
+	private AutorRepository autorRepository;
 	
 	//private static char last0= ''
 	
@@ -159,6 +162,7 @@ public class ComicsService {
 	
 	
 	//traz todos os livros cadastrados no banco de dados
+	//****TALVEz modificar este método e deixar somente trazer os livros do banco, sem considerar os descontos.
 	public List<Comics> buscarLivrosBanco(){
 		
 		//O novo bloc deve ser colocado aqui
@@ -187,6 +191,9 @@ public class ComicsService {
 		return listaComics;
 		
 	}
+	
+	//Realizar a aplicação do desconto APENAS quando escolher para lista para um USUÁRIO ESPECÌFCO
+	
 	
 	public static String definirDiaDesconto(String isbn) {
 		
@@ -302,6 +309,91 @@ public class ComicsService {
 		return preco = preco * 0.9;
 		
 	}
+	
+	public Comics converteDto (ComicsDto comicDto) {
+		
+		return new Comics(comicDto.getId(), comicDto.getTitulo(),comicDto.getIsbn(), comicDto.getDescricao(), comicDto.getPreco());
+	
+	}
+	
+	public void alterarComicUsuario(Comics comicNew, Usuario usuario) {
+		// aqui Coloquei alterar em vez de inserir porque o livro já existe no BD.
+		//Não poderá ser incluso novos livros e nem alterar informações importantes, apenas o usuario.
+		try {
+		Comics comicBd = comicRepository.getById(comicNew.getId());//recupera o Comic do BD, caso haja.
+		
+		if(comicBd.getUsuario() == null) {
+			
+			//livro disponivel para ser cadastrado com usuario
+			comicBd.setUsuario(usuario);
+			alteraDadosUsuario(comicBd, comicNew, usuario);//passa os dados do objeto novo para o objeto BD
+			comicRepository.save(comicBd);//salva no banco o objeto populado con o Usuario
+			
+		}
+		
+		//***Este livro não está disponível, pois já está vinculado a outro usuário.
+		
+		
+		
+		
+		
+		}catch (Exception e) {
+			
+			//caso não encontre o objeto Comic no banco
+			//ID inconsistente
+			e.printStackTrace();
+		}
+				// recupera o comic do banco
+				//compara para ver se é o mesmo e se possui algum id de usuario
+				//Se possuir. inserir(updata) usuario em Comic
+				//Inserir Comic em usuario
+				
+	}
+	
+	public void alteraDadosUsuario (Comics comicBd , Comics comicsNew, Usuario usuario) {//Com a premissa de que exista o atributo usuário .
+		
+		comicBd.setTitulo(comicsNew.getTitulo());
+		comicBd.setIsbn(comicsNew.getIsbn());
+		comicBd.setDescricao(comicsNew.getDescricao());
+		comicBd.setPreco(comicsNew.getPreco());
+		comicBd.setUsuario(comicsNew.getUsuario());
+		
+	}
+		
+		/*
+		public void update(Long id, Cliente newCliente) {
+		
+		try {
+		
+		
+			
+			Cliente cliente = clienteRepository.getById(id);
+			updateData(cliente, newCliente);
+			 clienteRepository.save(cliente);
+		
+		}catch (Exception e) {
+			
+			e.printStackTrace();
+		
+		
+		}	
+		
+		
+		public void updateData(Cliente cliente, Cliente newCliente) {
+			
+		cliente.setNome(newCliente.getNome());
+		cliente.setCpf(newCliente.getCpf());
+		cliente.setTelefone(newCliente.getTelefone());
+		cliente.setScore(newCliente.getScore());
+		cliente.setSaudeFinanceira(newCliente.getSaudeFinanceira());
+					
+	}
+
+	}
+		 
+		 */
+		
+	
 	
 }
 

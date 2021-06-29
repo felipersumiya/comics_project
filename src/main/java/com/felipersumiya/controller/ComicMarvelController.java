@@ -29,7 +29,7 @@ public class ComicMarvelController {
 	@Autowired
 	private ComicsService comicService;
 
-	
+	// Será um método Post e irá inserios os dados da API Marvel no banco de dados da aplicação.
 	@GetMapping
 	public ResponseEntity<ComicJson> cadastrarComics() throws JsonMappingException, JsonProcessingException {
 
@@ -47,7 +47,7 @@ public class ComicMarvelController {
 		
         return comics != null ? ResponseEntity.ok().body(comics) : ResponseEntity.notFound().build(); 
 	}	
-	
+	//Modificar este mara trazer lista com o iD de usuário.
 	@GetMapping (value = "/comicsList")
 	public ResponseEntity<List<Comics>> buscarComics(){
 		
@@ -78,6 +78,16 @@ public class ComicMarvelController {
 		return ResponseEntity.ok().body(listComics);
 		//return listaComics != null ? ResponseEntity.ok().body(listaComics) : ResponseEntity.notFound().build(); 
 	}
+	
+	
+	
+	//Talvez fazer mais um método que apenas traz a lista
+	
+	
+	
+	
+	
+
 	
 }
 
