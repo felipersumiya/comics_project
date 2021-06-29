@@ -72,6 +72,9 @@ public class ComicsService {
 			comics.setTitulo(y.getTitle());
 			comics.setIsbn(y.getIsbn().isEmpty() ? "Indisponível" : y.getIsbn());
 			comics.setPreco(y.getPrices().get(0).getPrice());
+		
+			/***********************************************************************************
+			////Inicio do bloco para separação. Deve ser colocado no endpoint que devolve a lista de comic depoiis de já inserida no banco de dados.
 			
 			//setando novo atributo
 			comics.setDiaDesconto(ComicsService.definirDiaDesconto(comics.getIsbn()));
@@ -84,6 +87,9 @@ public class ComicsService {
 				//somente desconta o valor caso seja o dia de desconto
 				comics.setPreco(ComicsService.aplicaDesconto(comics.getPreco()));
 			}
+			
+			//Fim do BLOCO///////////////////////////////////////////////////////////////
+			/*************************************************************************************/
 	
 			//Popula a lista de autores no objeto comics.
 			for(Autor autor : autores) {
@@ -155,8 +161,30 @@ public class ComicsService {
 	//traz todos os livros cadastrados no banco de dados
 	public List<Comics> buscarLivrosBanco(){
 		
-		return comicRepository.findAll();
+		//O novo bloc deve ser colocado aqui
+		List<Comics> listaComics =  comicRepository.findAll();
 		
+		
+
+		for(Comics x : listaComics) {
+
+			
+			//setando novo atributo
+			x.setDiaDesconto(ComicsService.definirDiaDesconto(x.getIsbn()));
+			
+			//setando desconto ativo
+			x.setDescontoAtivo(ComicsService.definirDescontoAtivo(x.getDiaDesconto()));
+			
+			//verificar se o preço do livro será com desconto
+			if (x.isDescontoAtivo() == true) {
+				//somente desconta o valor caso seja o dia de desconto
+				x.setPreco(ComicsService.aplicaDesconto(x.getPreco()));
+			}
+			
+		}
+		comicRepository.saveAll(listaComics);
+		
+		return listaComics;
 		
 	}
 	

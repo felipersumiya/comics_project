@@ -31,7 +31,7 @@ public class ComicMarvelController {
 
 	
 	@GetMapping
-	public ResponseEntity<List<Comics>> cadastrarComics() throws JsonMappingException, JsonProcessingException {
+	public ResponseEntity<ComicJson> cadastrarComics() throws JsonMappingException, JsonProcessingException {
 
 		//Traz o Json com os comics da API da marvel e converte para nossa classe ComicJson.
 		//Obtém através do Spring Cloud Feign
@@ -41,11 +41,11 @@ public class ComicMarvelController {
 		comicService.inserirComics(comics);	
 		
 		//Retorna a lista de livros que foi inserida no banco de dados
-		listaComics = comicService.buscarLivrosBanco();
+		//listaComics = comicService.buscarLivrosBanco();
 		
-		return listaComics != null ? ResponseEntity.ok().body(listaComics) : ResponseEntity.notFound().build(); 
+		//return listaComics != null ? ResponseEntity.ok().body(listaComics) : ResponseEntity.notFound().build(); 
 		
-       // return comics != null ? ResponseEntity.ok().body(comics) : ResponseEntity.notFound().build(); 
+        return comics != null ? ResponseEntity.ok().body(comics) : ResponseEntity.notFound().build(); 
 	}	
 	
 	@GetMapping (value = "/comicsList")
@@ -76,6 +76,7 @@ public class ComicMarvelController {
 		}
 		
 		return ResponseEntity.ok().body(listComics);
+		//return listaComics != null ? ResponseEntity.ok().body(listaComics) : ResponseEntity.notFound().build(); 
 	}
 	
 }
