@@ -8,9 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table (name ="tb_comics")
@@ -32,8 +33,9 @@ public class Comics implements Serializable {
 	@OneToMany (mappedBy = "comic")//,fetch = FetchType.EAGER)
 	private List<Autor> autores = new ArrayList<>();
 
-	@Transient
-	private List<Usuario> usuarios;
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
 	
 	public Comics() {
 		
@@ -93,11 +95,6 @@ public class Comics implements Serializable {
 		return autores;
 	}
 
-	
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
 	public String getDiaDesconto() {
 		return diaDesconto;
 	}
@@ -115,6 +112,14 @@ public class Comics implements Serializable {
 		this.descontoAtivo = descontoAtivo;
 	}
 	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	@Override
 	public int hashCode() {

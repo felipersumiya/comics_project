@@ -9,9 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -34,14 +36,13 @@ public class Usuario implements Serializable {
 	private String email;
 	private String dataNascimento;
 	
-	@Transient
+	@JsonIgnore
+	@OneToMany (mappedBy = "usuario")
 	private List<Comics> comics = new ArrayList<>();
-	
 	
 	public Usuario() {
 		
 	}
-
 
 	public Usuario(Long id , String nome, String cpf, String email, String dataNascimento) {
 		super();
