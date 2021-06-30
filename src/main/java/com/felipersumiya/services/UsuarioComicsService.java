@@ -43,6 +43,14 @@ public class UsuarioComicsService {
 			comic = comicsRepository.getById(comic.getId());
 			//salvar comic em usuario.
 			//necessário verificar se já possui este livro antes de adicionar
+			
+			alterarComicUsuario(comic, usuario);
+			
+			
+			
+			
+			/***
+			
 			usuario.getComics().add(comic);
 			usuarioRepository.save(usuario);
 			//necessario fazer a comunicação com o ComicService.
@@ -53,7 +61,7 @@ public class UsuarioComicsService {
 		//	comic.setUsuario(usuario);
 			//comicsRepository.save(comic);
 		
-		
+		**/
 		
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -78,9 +86,11 @@ public class UsuarioComicsService {
 		if(comicBd.getUsuario() == null) {
 			
 			//livro disponivel para ser cadastrado com usuario
+			usuario.getComics().add(comicBd);
 			comicBd.setUsuario(usuario);
 			alteraDadosUsuario(comicBd, comicNew, usuario);//passa os dados do objeto novo para o objeto BD
 			comicsRepository.save(comicBd);//salva no banco o objeto populado con o Usuario
+			usuarioRepository.save(usuario);
 			
 		}
 		
@@ -111,41 +121,6 @@ public class UsuarioComicsService {
 		
 	}
 		
-		/*
-		public void update(Long id, Cliente newCliente) {
-		
-		try {
-		
-		
-			
-			Cliente cliente = clienteRepository.getById(id);
-			updateData(cliente, newCliente);
-			 clienteRepository.save(cliente);
-		
-		}catch (Exception e) {
-			
-			e.printStackTrace();
-		
-		
-		}	
-		
-		
-		public void updateData(Cliente cliente, Cliente newCliente) {
-			
-		cliente.setNome(newCliente.getNome());
-		cliente.setCpf(newCliente.getCpf());
-		cliente.setTelefone(newCliente.getTelefone());
-		cliente.setScore(newCliente.getScore());
-		cliente.setSaudeFinanceira(newCliente.getSaudeFinanceira());
-					
-	}
 
-	}
-		 
-		 */
-		
-	
-	
 }
-
 

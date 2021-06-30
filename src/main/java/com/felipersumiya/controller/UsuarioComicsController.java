@@ -2,8 +2,8 @@ package com.felipersumiya.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,20 +31,8 @@ public class UsuarioComicsController {
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	
-	//criar método adicionar livros para um usuário @post
-	
-	/*
-	 	@PutMapping (value = "/{id}")
-	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj){ 
-	 * 
-	 * 
-		obj = userService.update(id, obj);
-		return ResponseEntity.ok().body(obj);
-	 * 
-	 
-	 */
-	
+	//Permite o cadastro de Comic em usuário.
+	//Forneça o ID de Usuário e o Comic a ser inserido.
 	@PutMapping (value = "/{id}")
 	public ResponseEntity<Usuario> insereComicUser (@PathVariable Long id, @RequestBody ComicsDto comicDto){
 	
@@ -67,6 +55,14 @@ public class UsuarioComicsController {
 
 	}
 	
-	
+	@GetMapping (value = "/{id}")
+	public ResponseEntity<UsuarioDto> listaUsuarioComics(@PathVariable Long id ){
+		
+		
+		Usuario usuario = usuarioService.findById(id);
+				
+		
+		return ResponseEntity.ok().body(new UsuarioDto(usuario));
+	}
 
 }
