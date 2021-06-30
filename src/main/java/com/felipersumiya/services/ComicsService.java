@@ -27,6 +27,29 @@ public class ComicsService {
 	@Autowired 
 	private AutorRepository autorRepository;
 	
+	private final static String DOMINGO = "domingo";
+	private final static String SEGUNDA = "segunda-feira";
+	private final static String TERCA = "terça-feira";
+	private final static String QUARTA = "quarta-feira";
+	private final static String QUINTA = "quinta-feira";
+	private final static String SEXTA = "sexta-feira";
+	private final static String SABADO = "sábado";
+	private final static String DESC_INATIVO = "Não possui desconto.";
+	private final static String DIA_INEXISTENTE = "Dia inexistente";
+	private final static String INDISPONIVEL = "Indisponível";
+	
+	private final static char ZERO = '0';
+	private final static char UM = '1';
+	private final static char DOIS = '2';
+	private final static char TRES = '3';
+	private final static char QUATRO = '4';
+	private final static char CINCO = '5';
+	private final static char SEIS = '6';
+	private final static char SETE = '7';
+	private final static char OITO = '8';
+	private final static char NOVE = '9';
+	
+	
 	//private static char last0= ''
 	
 	//inserir os livros (Comics) no banco de dados.
@@ -198,37 +221,37 @@ public class ComicsService {
 	public static String definirDiaDesconto(String isbn) {
 		
 		char ultimoDig;
-		String diaDescontoAtivo="Não possui desconto";
+		String diaDescontoAtivo= DESC_INATIVO;
 		
-		if(isbn != "Indisponível") {
+		if(isbn != INDISPONIVEL) {
 			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ENTROU$$$$");
 			ultimoDig = isbn.charAt(isbn.length() - 1);
 			System.out.println("VALOR##############ULTIMO DIG:");
 			System.out.println(ultimoDig);
 		
-			if(ultimoDig == '0' || ultimoDig == '1' ) {
+			if(ultimoDig == ZERO || ultimoDig == UM ) {
 			
-				diaDescontoAtivo = "segunda-feira";
+				diaDescontoAtivo = SEGUNDA;
 			}
 		
-			if(ultimoDig == '2' || ultimoDig == '3' ) {
+			if(ultimoDig == DOIS || ultimoDig == TRES ) {
 			
-				diaDescontoAtivo = "terça-feira";
+				diaDescontoAtivo = TERCA;
 			}
 		
-			if(ultimoDig == '4' || ultimoDig == '5' ) {
+			if(ultimoDig == QUATRO || ultimoDig == CINCO ) {
 			
-				diaDescontoAtivo = "quarta-feira";
+				diaDescontoAtivo = QUARTA;
 			}
 	
-			if(ultimoDig == '6' || ultimoDig == '7' ) {
+			if(ultimoDig == SEIS || ultimoDig == SETE ) {
 		
-				diaDescontoAtivo = "quinta-feira";
+				diaDescontoAtivo = QUINTA;
 			}
 	
-			if(ultimoDig == '8' || ultimoDig == '9' ) {
+			if(ultimoDig == OITO || ultimoDig == NOVE ) {
 		
-				diaDescontoAtivo = "sexta-feira";
+				diaDescontoAtivo = SEXTA;
 			}
 		
 		}
@@ -261,47 +284,47 @@ public class ComicsService {
 		
 		if (dia == 1){
 			
-			return "domingo";
+			return DOMINGO;
 					
 		}
 		
 		if (dia == 2){
 			
-			return "segunda-feira";
+			return SEGUNDA;
 					
 		}
 		
 		if (dia == 3){
 			
-			return "terça-feira";
+			return TERCA;
 					
 		}
 		
 		if (dia == 4){
 			
-			return "quarta-feira";
+			return QUARTA;
 					
 		}
 		
 		if (dia == 5){
 			
-			return "quinta-feira";
+			return QUINTA;
 					
 		}
 		
 		if (dia == 6){
 			
-			return "sexta-feira";
+			return SEXTA;
 					
 		}
 		
 		if (dia == 7){
-			return "domingo";
+			return DOMINGO;
 					
 		}
 		
 		
-		return "dia inexistente";
+		return DIA_INEXISTENTE;
 	}
 	
 	public static Double aplicaDesconto(Double preco) {
@@ -334,9 +357,6 @@ public class ComicsService {
 		//***Este livro não está disponível, pois já está vinculado a outro usuário.
 		
 		
-		
-		
-		
 		}catch (Exception e) {
 			
 			//caso não encontre o objeto Comic no banco
@@ -359,42 +379,7 @@ public class ComicsService {
 		comicBd.setUsuario(comicsNew.getUsuario());
 		
 	}
-		
-		/*
-		public void update(Long id, Cliente newCliente) {
-		
-		try {
-		
-		
 			
-			Cliente cliente = clienteRepository.getById(id);
-			updateData(cliente, newCliente);
-			 clienteRepository.save(cliente);
-		
-		}catch (Exception e) {
-			
-			e.printStackTrace();
-		
-		
-		}	
-		
-		
-		public void updateData(Cliente cliente, Cliente newCliente) {
-			
-		cliente.setNome(newCliente.getNome());
-		cliente.setCpf(newCliente.getCpf());
-		cliente.setTelefone(newCliente.getTelefone());
-		cliente.setScore(newCliente.getScore());
-		cliente.setSaudeFinanceira(newCliente.getSaudeFinanceira());
-					
-	}
-
-	}
-		 
-		 */
-		
-	
-	
 }
 
 

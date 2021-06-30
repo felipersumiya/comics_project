@@ -38,30 +38,17 @@ public class UsuarioComicsController {
 	
 		Comics comic = comicsService.converteDto(comicDto);
 		Usuario  usuario  = new Usuario();
-		System.out.println("$$$$$$$$entrou aqui");
 		usuarioComicsService.inserComicUsuario(id, comic);
-		System.out.println("$$$ aqui tbm");
 		usuario = usuarioService.findById(id);
-		
-		System.out.println("Dados usuario");
-		System.out.println("id");
-		System.out.println(usuario.getId());
-		System.out.println("nome");
-		System.out.println(usuario.getNome());
-		System.out.println("%%%%% e aqui?'");
-		System.out.println("%%%%% e aqui?'");
 		return ResponseEntity.ok().body(usuario);
-	
 
 	}
 	
 	@GetMapping (value = "/{id}")
 	public ResponseEntity<UsuarioDto> listaUsuarioComics(@PathVariable Long id ){
-		
-		
+			
 		Usuario usuario = usuarioService.findById(id);
 				
-		
 		return ResponseEntity.ok().body(new UsuarioDto(usuario));
 	}
 

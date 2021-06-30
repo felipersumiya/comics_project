@@ -34,20 +34,31 @@ public class UsuarioComicsService {
 		
 		//Comics comic = new Comics();
 		Usuario usuario = new Usuario();
+		Comics comicBd = new Comics();
 		
 		try {
-	
+			
 			System.out.println("*********Início");
 			usuario = usuarioRepository.getById(idUsuario);
 			System.out.println("****obteve o objeto usuario do banco");
-			comic = comicsRepository.getById(comic.getId());
+			comicBd = comicsRepository.getById(comic.getId());
 			//salvar comic em usuario.
 			//necessário verificar se já possui este livro antes de adicionar
 			
-			alterarComicUsuario(comic, usuario);
+			//alterarComicUsuario(comic, usuario);
 			
 			
-			
+
+			if(comicBd.getUsuario() == null) {
+				
+				//livro disponivel para ser cadastrado com usuario//adiciona as relações
+				usuario.getComics().add(comicBd);
+				comicBd.setUsuario(usuario);
+				//alteraDadosUsuario(comicBd, comicNew, usuario);//passa os dados do objeto novo para o objeto BD
+				comicsRepository.save(comicBd);//salva no banco o objeto populado con o Usuario
+				usuarioRepository.save(usuario);
+				
+			}
 			
 			/***
 			
@@ -64,20 +75,16 @@ public class UsuarioComicsService {
 		**/
 		
 		}catch (Exception e) {
-			// TODO: handle exception
+				
+				e.printStackTrace();
 		}
 		
-		
-	
-		// recupera o comic do banco
-		//compara para ver se é o mesmo e se possui algum id de usuario
-		//Se possuir. inserir(updata) usuario em Comic
-		//Inserir Comic em usuario
+
 		
 	}
 	
 
-	public void alterarComicUsuario(Comics comicNew, Usuario usuario) {
+	/*public void alterarComicUsuario(Comics comicNew, Usuario usuario) {
 		// aqui Coloquei alterar em vez de inserir porque o livro já existe no BD.
 		//Não poderá ser incluso novos livros e nem alterar informações importantes, apenas o usuario.
 		try {
@@ -119,7 +126,7 @@ public class UsuarioComicsService {
 		comicBd.setPreco(comicsNew.getPreco());
 		comicBd.setUsuario(comicsNew.getUsuario());
 		
-	}
+	}*/
 		
 
 }
