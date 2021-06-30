@@ -14,12 +14,12 @@ public class ComicsDto {
 	private String isbn;
 	private String descricao;
 	private Double preco;
-	private String diaDesconto;
-	private boolean descontoAtivo;
+	//private String diaDesconto;
+	//private boolean descontoAtivo;
 	
 	private List<Autor> autores = new ArrayList<>();
 
-	private Usuario usuario;
+	//private Usuario usuario;
 	
 	public ComicsDto() {
 		
@@ -32,10 +32,10 @@ public class ComicsDto {
 		isbn = comics.getIsbn();
 		descricao = comics.getDescricao();
 		preco = comics.getPreco();
-		diaDesconto = comics.getDiaDesconto();
-		descontoAtivo = comics.isDescontoAtivo();
+		//diaDesconto = comics.getDiaDesconto();
+		//descontoAtivo = comics.isDescontoAtivo();
 		autores = comics.getAutores();
-		usuario = comics.getUsuario();
+		//usuario = comics.getUsuario();
 		
 	}
 
@@ -79,21 +79,21 @@ public class ComicsDto {
 		this.preco = preco;
 	}
 
-	public String getDiaDesconto() {
+	/*public String getDiaDesconto() {
 		return diaDesconto;
-	}
+	}*/
 
-	public void setDiaDesconto(String diaDesconto) {
+	/*public void setDiaDesconto(String diaDesconto) {
 		this.diaDesconto = diaDesconto;
-	}
+	}*/
 
-	public boolean isDescontoAtivo() {
+	/*public boolean isDescontoAtivo() {
 		return descontoAtivo;
-	}
+	}*/
 
-	public void setDescontoAtivo(boolean descontoAtivo) {
+/*	public void setDescontoAtivo(boolean descontoAtivo) {
 		this.descontoAtivo = descontoAtivo;
-	}
+	}*/
 
 	public List<Autor> getAutores() {
 		return autores;
@@ -103,16 +103,15 @@ public class ComicsDto {
 		this.autores = autores;
 	}
 
-	public Usuario getUsuario() {
+	/*public Usuario getUsuario() {
 		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
+	}*/
 	
 	
-	
-	
+
 
 }

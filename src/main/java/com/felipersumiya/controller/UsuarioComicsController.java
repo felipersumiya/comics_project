@@ -34,13 +34,13 @@ public class UsuarioComicsController {
 	//Permite o cadastro de Comic em usuário.
 	//Forneça o ID de Usuário e o Comic a ser inserido.
 	@PutMapping (value = "/{id}")
-	public ResponseEntity<Usuario> insereComicUser (@PathVariable Long id, @RequestBody ComicsDto comicDto){
+	public ResponseEntity<UsuarioDto> insereComicUser (@PathVariable Long id, @RequestBody ComicsDto comicDto){
 	
 		Comics comic = comicsService.converteDto(comicDto);
 		Usuario  usuario  = new Usuario();
 		usuarioComicsService.inserComicUsuario(id, comic);
 		usuario = usuarioService.findById(id);
-		return ResponseEntity.ok().body(usuario);
+		return ResponseEntity.ok().body(new UsuarioDto(usuario));
 
 	}
 	

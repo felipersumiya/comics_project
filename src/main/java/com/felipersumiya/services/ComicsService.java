@@ -50,7 +50,6 @@ public class ComicsService {
 	private final static char NOVE = '9';
 	
 	
-	//private static char last0= ''
 	
 	//inserir os livros (Comics) no banco de dados.
 	public void inserirComics(ComicJson comicJson) {
