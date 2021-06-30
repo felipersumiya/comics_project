@@ -10,6 +10,7 @@ import com.felipersumiya.domain.Usuario;
 import com.felipersumiya.dto.UsuarioDto;
 import com.felipersumiya.repositories.ComicsRepository;
 import com.felipersumiya.repositories.UsuarioRepository;
+import com.felipersumiya.services.exceptions.ResourceNotFoundException;
 
 
 
@@ -33,7 +34,7 @@ public class UsuarioService {
 	public Usuario findById(Long id) {
 		
 		Optional<Usuario> usuario =  usuarioRepository.findById(id);	
-		return usuario.get();
+		return usuario.orElseThrow(() -> new ResourceNotFoundException(id));
 		
 	}
 
