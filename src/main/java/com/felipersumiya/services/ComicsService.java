@@ -3,6 +3,7 @@ package com.felipersumiya.services;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import com.felipersumiya.domain.json.Results;
 import com.felipersumiya.dto.ComicsDto;
 import com.felipersumiya.repositories.AutorRepository;
 import com.felipersumiya.repositories.ComicsRepository;
+import com.felipersumiya.services.exceptions.ResourceNotFoundException;
 
 
 @Service
@@ -50,28 +52,13 @@ public class ComicsService {
 	private final static char NOVE = '9';
 	
 	
-	
 	//inserir os livros (Comics) no banco de dados.
+	
 	public void inserirComics(ComicJson comicJson) {
 		
 		//insere a lista de livros obtida através do serviço externo
+		
 		List<Results> listLivrosMarvel = comicJson.getData().getResults();
-		
-		for (Results x: listLivrosMarvel) {
-			
-			System.out.println("Primeiro teste");
-			System.out.println("titulo:");
-			System.out.println(x.getTitle());
-			
-			
-			for (Items nome1 : x.getCreators().getItems()) {
-				System.out.println("############################## LOOK THERE######");
-				System.out.println("Autor");
-				System.out.println(nome1.getName());
-				
-			}
-		}
-		
 		
 		//lista que irei salvar no banco
 		List<Comics> listComics = new ArrayList<>();
@@ -81,90 +68,58 @@ public class ComicsService {
 			
 			Comics comics = new Comics();
 			List<Autor> autores = new ArrayList<>();
-			System.out.println("passou aqui");
 			List<Items> itens = y.getCreators().getItems();
-			System.out.println("converteu lista");
 			if(y.getCreators().getItems().isEmpty()) {
-				System.out.println("entrou no if");
-				
+						
 			}
 			
-			System.out.println("passou aqui");
-			autores = convertList(itens);//converte a lista de Items(obtida na API da Marvel) para a o tipo <Autor>. Presente em nosso modelo de dados.
 	
-			System.out.println("converteu lista");
+			autores = convertList(itens);    //converte a lista de Items(obtida na API da Marvel) para a o tipo <Autor>. Presente em nosso modelo de dados.
+	
+		
 			comics.setDescricao(y.getDescription() != null ? y.getDescription().substring(0, 100) : "Indisponível");
 			comics.setTitulo(y.getTitle());
 			comics.setIsbn(y.getIsbn().isEmpty() ? "Indisponível" : y.getIsbn());
 			comics.setPreco(y.getPrices().get(0).getPrice());
 		
-			/***********************************************************************************
-			////Inicio do bloco para separação. Deve ser colocado no endpoint que devolve a lista de comic depoiis de já inserida no banco de dados.
 			
-			//setando novo atributo
-			comics.setDiaDesconto(ComicsService.definirDiaDesconto(comics.getIsbn()));
+			/*Popula a lista de autores no objeto comics.*/
 			
-			//setando desconto ativo
-			comics.setDescontoAtivo(ComicsService.definirDescontoAtivo(comics.getDiaDesconto()));
-			
-			//verificar se o preço do livro será com desconto
-			if (comics.isDescontoAtivo() == true) {
-				//somente desconta o valor caso seja o dia de desconto
-				comics.setPreco(ComicsService.aplicaDesconto(comics.getPreco()));
-			}
-			
-			//Fim do BLOCO///////////////////////////////////////////////////////////////
-			/*************************************************************************************/
-	
-			//Popula a lista de autores no objeto comics.
 			for(Autor autor : autores) {
-			comics.getAutores().add(autor);//adiciona autor em comics.
-			autor.setComic(comics);//relaciona cada autor a um comic(livro.)Na classe de autores.
+			comics.getAutores().add(autor);   //adiciona autor em comics.
+			autor.setComic(comics);          //relaciona cada autor a um comic(livro.)Na classe de autores.
 			
 			}
 		
-			listComics.add(comics);// adiciona cada livro na lista de Comics
+			listComics.add(comics);         //adiciona cada livro na lista de Comics
 			
 			//Salva a lista de autores obtidos através da API da Marvel no banco de dados.
-			autorRepository.saveAll(autores);// adicona a lista de autores no banco de dados.
+			
+			autorRepository.saveAll(autores);         // adicona a lista de autores no banco de dados.
 			
 		}
 		
-		for(Comics x : listComics) {
-			
-			System.out.println("Agora veremos se a lista está correta para ser inserida no banco");
-			System.out.println("Título");
-			System.out.println(x.getTitulo());
-			System.out.println("número de autores");
-			System.out.println(x.getAutores().size());
-			
-			for (Autor nome : x.getAutores()) {
-				System.out.println("Autor:");
-				System.out.println(nome.getNome());
-			}
-		
-			
-		}
-		
+	
 		//Salva os livros obtidos através da API no nosso banco de dados.
+		
 		comicRepository.saveAll(listComics);
 	}
 	
 	public List<Autor> convertList(List<Items> listI){
 		
-			System.out.println("metodo que converte--inicio");
+	
 			Autor a = new Autor();
 			List<Autor> listA = new ArrayList<>();
 			
 			if(listI.isEmpty()) {
 				
-				System.out.println("Entrou na lista vazia");
+				
 				a.setNome("Indisponível");
 				listA.add(a);
 				
 				for(Items x : listI) {
 					
-					System.out.println("Entrou na lista vazia");
+					
 					a.setNome("Indisponível");
 					listA.add(a);
 					
@@ -185,9 +140,11 @@ public class ComicsService {
 	
 	//traz todos os livros cadastrados no banco de dados
 	//****TALVEz modificar este método e deixar somente trazer os livros do banco, sem considerar os descontos.
+	
 	public List<Comics> buscarLivrosBanco(){
 		
 		//O novo bloc deve ser colocado aqui
+		
 		List<Comics> listaComics =  comicRepository.findAll();
 		
 		
@@ -196,14 +153,18 @@ public class ComicsService {
 
 			
 			//setando novo atributo
+			
 			x.setDiaDesconto(ComicsService.definirDiaDesconto(x.getIsbn()));
 			
 			//setando desconto ativo
+			
 			x.setDescontoAtivo(ComicsService.definirDescontoAtivo(x.getDiaDesconto()));
 			
 			//verificar se o preço do livro será com desconto
+			
 			if (x.isDescontoAtivo() == true) {
 				//somente desconta o valor caso seja o dia de desconto
+				
 				x.setPreco(ComicsService.aplicaDesconto(x.getPreco()));
 			}
 			
@@ -216,6 +177,12 @@ public class ComicsService {
 	
 	//Realizar a aplicação do desconto APENAS quando escolher para lista para um USUÁRIO ESPECÌFCO
 	
+	public Comics findById(Long id) {
+		
+		Optional<Comics> comic =  comicRepository.findById(id);	
+		return comic.orElseThrow(() -> new ResourceNotFoundException(id));
+		
+	}
 	
 	public static String definirDiaDesconto(String isbn) {
 		
@@ -223,11 +190,9 @@ public class ComicsService {
 		String diaDescontoAtivo= DESC_INATIVO;
 		
 		if(isbn != INDISPONIVEL) {
-			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ENTROU$$$$");
+			
 			ultimoDig = isbn.charAt(isbn.length() - 1);
-			System.out.println("VALOR##############ULTIMO DIG:");
-			System.out.println(ultimoDig);
-		
+				
 			if(ultimoDig == ZERO || ultimoDig == UM ) {
 			
 				diaDescontoAtivo = SEGUNDA;
@@ -274,8 +239,7 @@ public class ComicsService {
 			
 		}
 		
-		
-		
+	
 		return false;
 	}
 	
@@ -322,7 +286,6 @@ public class ComicsService {
 					
 		}
 		
-		
 		return DIA_INEXISTENTE;
 	}
 	
@@ -336,47 +299,6 @@ public class ComicsService {
 		
 		return new Comics(comicDto.getId(), comicDto.getTitulo(),comicDto.getIsbn(), comicDto.getDescricao(), comicDto.getPreco());
 	
-	}
-	
-	public void alterarComicUsuario(Comics comicNew, Usuario usuario) {
-		// aqui Coloquei alterar em vez de inserir porque o livro já existe no BD.
-		//Não poderá ser incluso novos livros e nem alterar informações importantes, apenas o usuario.
-		try {
-		Comics comicBd = comicRepository.getById(comicNew.getId());//recupera o Comic do BD, caso haja.
-		
-		if(comicBd.getUsuario() == null) {
-			
-			//livro disponivel para ser cadastrado com usuario
-			comicBd.setUsuario(usuario);
-			alteraDadosUsuario(comicBd, comicNew, usuario);//passa os dados do objeto novo para o objeto BD
-			comicRepository.save(comicBd);//salva no banco o objeto populado con o Usuario
-			
-		}
-		
-		//***Este livro não está disponível, pois já está vinculado a outro usuário.
-		
-		
-		}catch (Exception e) {
-			
-			//caso não encontre o objeto Comic no banco
-			//ID inconsistente
-			e.printStackTrace();
-		}
-				// recupera o comic do banco
-				//compara para ver se é o mesmo e se possui algum id de usuario
-				//Se possuir. inserir(updata) usuario em Comic
-				//Inserir Comic em usuario
-				
-	}
-	
-	public void alteraDadosUsuario (Comics comicBd , Comics comicsNew, Usuario usuario) {//Com a premissa de que exista o atributo usuário .
-		
-		comicBd.setTitulo(comicsNew.getTitulo());
-		comicBd.setIsbn(comicsNew.getIsbn());
-		comicBd.setDescricao(comicsNew.getDescricao());
-		comicBd.setPreco(comicsNew.getPreco());
-		comicBd.setUsuario(comicsNew.getUsuario());
-		
 	}
 			
 }

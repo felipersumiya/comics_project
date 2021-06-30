@@ -14,7 +14,6 @@ public class AutorDto {
 	
 	}
 	
-	
 	public AutorDto (Autor autor) {
 		id = autor.getId();
 		nome = autor.getNome();
