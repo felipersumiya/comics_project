@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.felipersumiya.cloud.ComicMarvelService;
 import com.felipersumiya.domain.Comics;
 import com.felipersumiya.domain.json.ComicJson;
 import com.felipersumiya.dto.ComicsDto;
 import com.felipersumiya.services.ComicsService;
+import com.felipersumiya.services.cloud.ComicMarvelService;
 
 
 
@@ -25,14 +25,14 @@ import com.felipersumiya.services.ComicsService;
 @RequestMapping (value="/comics-marvel")
 public class ComicsController {
 	
-	//Atributo utilizado para a chamado o serviço externo. Utiliza o Spring Cloud Feign e chama a API da Marvel. 
+	//Atributo utilizado para a chamado o serviço externo. Utiliza o Spring Cloud OpenFeign e chama a API da Marvel. 
 	@Autowired
 	private ComicMarvelService service;
-	//Atributo que referencia a classe de serviços dos Comics.
+
 	@Autowired
 	private ComicsService comicService;
 
-	/*Será um método Post e irá inserios os dados da API Marvel no banco de dados da aplicação.*/
+
 	@PostMapping
 	public ResponseEntity<Void> cadastrarComics() throws JsonMappingException, JsonProcessingException {
 
@@ -41,13 +41,11 @@ public class ComicsController {
 		
 		ComicJson comics = service.buscaComics();
 		List<Comics> listaComics;
+		
 		/*Cadastra os comics no banco de dados.*/
 		comicService.inserirComics(comics);	
 		
-       // return comics != null ? ResponseEntity.ok().body(comics) : ResponseEntity.notFound().build(); 
-		//return ResponseEntity.created(uri).build();
-		//verificar o status de retorno.
-		return ResponseEntity.ok().build();
+		return comics != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build(); 
 	}	
 	
 	@GetMapping (value = "/comicsList")

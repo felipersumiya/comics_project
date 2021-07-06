@@ -1,4 +1,4 @@
-package com.felipersumiya.cloud;
+package com.felipersumiya.services.cloud;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

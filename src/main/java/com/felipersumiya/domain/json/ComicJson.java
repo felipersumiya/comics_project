@@ -1,7 +1,7 @@
 package com.felipersumiya.domain.json;
 
 
-//objeto principa do Json
+
 public class ComicJson {
 	
 	private String code;

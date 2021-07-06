@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.felipersumiya.domain.Usuario;
 import com.felipersumiya.dto.UsuarioDto;
-import com.felipersumiya.repositories.ComicsRepository;
 import com.felipersumiya.repositories.UsuarioRepository;
 import com.felipersumiya.services.exceptions.DatabaseException;
 import com.felipersumiya.services.exceptions.ResourceNotFoundException;
@@ -22,10 +21,6 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	@Autowired
-	private ComicsRepository comicsRepository;
-
 	
 	public List<Usuario> findAll() {
 

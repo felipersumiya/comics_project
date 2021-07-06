@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.felipersumiya.domain.Autor;
 import com.felipersumiya.domain.Comics;
-import com.felipersumiya.domain.Usuario;
 import com.felipersumiya.domain.json.ComicJson;
 import com.felipersumiya.domain.json.Items;
 import com.felipersumiya.domain.json.Results;
@@ -35,7 +34,6 @@ public class ComicsService {
 	private final static String QUARTA = "quarta-feira";
 	private final static String QUINTA = "quinta-feira";
 	private final static String SEXTA = "sexta-feira";
-	private final static String SABADO = "sábado";
 	private final static String DESC_INATIVO = "Não possui desconto.";
 	private final static String DIA_INEXISTENTE = "Dia inexistente";
 	private final static String INDISPONIVEL = "Indisponível";
@@ -60,7 +58,7 @@ public class ComicsService {
 		
 		List<Results> listLivrosMarvel = comicJson.getData().getResults();
 		
-		//lista que irei salvar no banco
+		//lista que será salva no banco de dados
 		List<Comics> listComics = new ArrayList<>();
 		
 		
@@ -139,11 +137,10 @@ public class ComicsService {
 	
 	
 	//traz todos os livros cadastrados no banco de dados
-	//****TALVEz modificar este método e deixar somente trazer os livros do banco, sem considerar os descontos.
 	
 	public List<Comics> buscarLivrosBanco(){
 		
-		//O novo bloc deve ser colocado aqui
+	
 		
 		List<Comics> listaComics =  comicRepository.findAll();
 		
@@ -152,19 +149,20 @@ public class ComicsService {
 		for(Comics x : listaComics) {
 
 			
-			//setando novo atributo
+			//definindo novo atributo
 			
 			x.setDiaDesconto(ComicsService.definirDiaDesconto(x.getIsbn()));
 			
-			//setando desconto ativo
+			//definindo desconto ativo
 			
 			x.setDescontoAtivo(ComicsService.definirDescontoAtivo(x.getDiaDesconto()));
 			
-			//verificar se o preço do livro será com desconto
+			//verifica se o preço do livro será com desconto
 			
 			if (x.isDescontoAtivo() == true) {
-				//somente desconta o valor caso seja o dia de desconto
 				
+				//somente desconta o valor caso seja o dia de desconto
+
 				x.setPreco(ComicsService.aplicaDesconto(x.getPreco()));
 			}
 			
@@ -175,7 +173,6 @@ public class ComicsService {
 		
 	}
 	
-	//Realizar a aplicação do desconto APENAS quando escolher para lista para um USUÁRIO ESPECÌFCO
 	
 	public Comics findById(Long id) {
 		

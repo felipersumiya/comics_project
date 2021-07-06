@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.felipersumiya.domain.Autor;
 import com.felipersumiya.domain.Comics;
-import com.felipersumiya.domain.Usuario;
+
 
 public class ComicsDto {
 	

@@ -32,7 +32,7 @@ public class UsuarioComicsController {
 	private UsuarioService usuarioService;
 	
 	//Permite o cadastro de Comic em usuário.
-	//Forneça o ID de Usuário e o Comic a ser inserido.
+
 	@PutMapping (value = "/{id}")
 	public ResponseEntity<UsuarioDto> insereComicUser (@PathVariable Long id, @RequestBody ComicsDto comicDto){
 	
