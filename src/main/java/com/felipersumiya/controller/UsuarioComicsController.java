@@ -18,7 +18,7 @@ import com.felipersumiya.services.UsuarioComicsService;
 import com.felipersumiya.services.UsuarioService;
 
 @RestController
-@RequestMapping (value="/usuario_comics")
+@RequestMapping (value="/usuario-comics")
 public class UsuarioComicsController {
 	
 
@@ -38,7 +38,7 @@ public class UsuarioComicsController {
 	
 		Comics comic = comicsService.converteDto(comicDto);
 		Usuario  usuario  = new Usuario();
-		usuarioComicsService.inserComicUsuario(id, comic);
+		usuarioComicsService.inserirComicUsuario(id, comic);
 		usuario = usuarioService.findById(id);
 		return ResponseEntity.ok().body(new UsuarioDto(usuario));
 

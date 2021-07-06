@@ -26,7 +26,7 @@ public class Autor implements Serializable{
 	private Long id;
 	private String nome;
 	
-	//@Transient
+
 	@JsonIgnore
 	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn (name = "comic_id")

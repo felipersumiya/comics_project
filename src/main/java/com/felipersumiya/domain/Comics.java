@@ -34,7 +34,7 @@ public class Comics implements Serializable {
 	private boolean descontoAtivo;
 	
 
-	@OneToMany (mappedBy = "comic")//,fetch = FetchType.EAGER)
+	@OneToMany (mappedBy = "comic")
 	private List<Autor> autores = new ArrayList<>();
 
 	@ManyToOne

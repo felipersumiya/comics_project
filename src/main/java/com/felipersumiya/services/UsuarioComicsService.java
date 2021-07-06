@@ -29,7 +29,7 @@ public class UsuarioComicsService {
 	private UsuarioRepository usuarioRepository;
 	
 
-	public void inserComicUsuario(Long idUsuario, Comics comic) {
+	public void inserirComicUsuario(Long idUsuario, Comics comic) {
 		
 		//Comics comic = new Comics();
 		Usuario usuario = new Usuario();

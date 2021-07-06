@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table (name="tb_user", uniqueConstraints = {@UniqueConstraint(columnNames = "cpf")})
 public class Usuario implements Serializable {
 
-
+	
 
 	private static final long serialVersionUID = 1L;
 	
